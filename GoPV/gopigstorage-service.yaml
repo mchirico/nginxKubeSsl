@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gopigstorage-service
+  labels:
+    run: gopigstorage-service
+spec:
+  selector:
+    run: gopigstorage-server
+  ports:
+  - port: 4434
+    targetPort: 2342
+
+  
+
+
+

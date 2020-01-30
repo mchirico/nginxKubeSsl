@@ -1,0 +1,57 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  generation: 1
+  labels:
+    run: gopigstorage-server
+  name: gopigstorage-server
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: gopigstorage-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: gopigstorage-server
+    spec:
+      hostname: gopigstorage
+      volumes:
+      - name: readwrite-volume
+        persistentVolumeClaim:
+          claimName: readwrite-pvc
+          readOnly: false
+      containers:
+      - image: us.gcr.io/mchirico/gopigstorage:latest
+        imagePullPolicy: Always
+        name: gopigstorage-server
+        ports:
+        - containerPort: 2341
+          protocol: TCP
+        volumeMounts:
+          - mountPath: /pvv
+            name: readwrite-volume
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
+

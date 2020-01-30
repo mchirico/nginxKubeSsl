@@ -1,0 +1,13 @@
+
+Monitor:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
+Debug:
+kubectl run --rm -it --image=us.gcr.io/mchirico/py0:test debug /bin/bash
+
+
+https://cloud.google.com/kubernetes-engine/docs/quickstart
+
+kubectl delete service hello-server
+gcloud container clusters delete spock
+
