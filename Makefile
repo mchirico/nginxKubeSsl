@@ -11,6 +11,12 @@ dhparam:
 dhparam4096:
 	openssl dhparam 4096 > dhparam.pem
 
+container:
+	gcloud container clusters create pig
+
+creds:
+	gcloud container clusters get-credentials pig
+
 build:
 	go build -v .
 
